@@ -5,10 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.meg4cyberc4t.rubleexchangecourse.Greeting
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.meg4cyberc4t.rubleexchangecourse.data.ValutesResponse
+import com.meg4cyberc4t.rubleexchangecourse.domain.MainPageViewModel
+import com.meg4cyberc4t.rubleexchangecourse.domain.cbrRequests
+import kotlinx.coroutines.flow.asStateFlow
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +26,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    GreetingView(Greeting().greet())
+                    val viewModel: MainPageViewModel = MainPageViewModel();
+                    GreetingView(viewModel)
                 }
             }
         }
@@ -27,14 +35,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GreetingView(text: String) {
-    Text(text = text)
+fun GreetingView(
+    viewModel: MainPageViewModel
+) {
+    val response: String? by viewModel.dataState.collectAsState();
+    Text(text = "$response")
 }
 
 @Preview
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        GreetingView("Hello, Android!")
+        val viewModel: MainPageViewModel = MainPageViewModel();
+        GreetingView(viewModel)
     }
 }
