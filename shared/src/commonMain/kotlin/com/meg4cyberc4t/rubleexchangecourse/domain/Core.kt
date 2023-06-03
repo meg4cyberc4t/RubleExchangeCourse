@@ -1,31 +1,16 @@
 package com.meg4cyberc4t.rubleexchangecourse.domain
 
-import de.jensklingenberg.ktorfit.ktorfit
-import de.jensklingenberg.ktorfit.converter.builtin.CallConverterFactory
-import de.jensklingenberg.ktorfit.converter.builtin.FlowConverterFactory
+
 import io.ktor.client.*
-import io.ktor.client.plugins.addDefaultResponseValidation
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
-import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import io.ktor.serialization.kotlinx.json.*
 
-
-val ktorfit = ktorfit {
-    baseUrl("https://www.cbr-xml-daily.ru/")
-    HttpClient() {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    prettyPrint = true
-                    isLenient = true
-                },
-            )
-            addDefaultResponseValidation()
-            expectSuccess = true
-        }
+var httpClient: HttpClient = HttpClient() {
+    install(ContentNegotiation) {
+        json()
+        json(contentType = ContentType.Application.JavaScript)
     }
 }
 
-val cbrRequests = ktorfit.create<CbrRequests>()
+var cbrRequests = CbrRequestsServiceImpl(httpClient)

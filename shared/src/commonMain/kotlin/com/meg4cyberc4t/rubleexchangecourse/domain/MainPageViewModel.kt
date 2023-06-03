@@ -1,14 +1,12 @@
 package com.meg4cyberc4t.rubleexchangecourse.domain
 
 import com.meg4cyberc4t.rubleexchangecourse.data.ValutesResponse
-import dev.icerock.moko.mvvm.livedata.MutableLiveData
-import kotlinx.coroutines.GlobalScope
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class MainPageViewModel : ViewModel(){
-    var dataState = MutableStateFlow<String?>(null)
+    var dataState = MutableStateFlow<ValutesResponse?>(null)
 
     init {
         viewModelScope.launch{

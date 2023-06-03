@@ -1,6 +1,5 @@
 package com.meg4cyberc4t.rubleexchangecourse.data
 
-import com.meg4cyberc4t.rubleexchangecourse.data.ValuteItem
 import kotlinx.datetime.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
